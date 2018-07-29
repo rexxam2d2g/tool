@@ -7,8 +7,7 @@ var data = document.location.search.substring(1);
 var parameters = data.split('?');
 
 // 各URLパラメータに対して処理実施
-if (1 >= document.location.search.length) {
-	alert("test");
+if (1 <= document.location.search.length) {
 	for (var i = 0; i < parameters.length; i++) {
 		// 各パラメータを格納
 		var element = parameters[i].split('=');
@@ -33,7 +32,6 @@ else if (p_peerID == null) {
 }
 else {
 	// Peer object
-	alert("test");
 	const peer = new Peer({
 		key: p_apikey,
 		debug: 3,
@@ -69,23 +67,23 @@ else {
 	});
 	*/
 
-	$('#watch').on('submit', e => {
-		e.preventDefault();
-		// Initiate a call!
-		console.log($('#callto-id').val());
-		const call = peer.call($('#callto-id').val());
+	//$('#watch').on('submit', e => {
+	e.preventDefault();
+	// Initiate a call!
+	console.log($('#callto-id').val());
+	const call = peer.call($('#callto-id').val());
 
-		// Wait for stream on the call, then set peer video display
-		call.on('stream', stream => {
-			const el = $('#video').get(0);
-			el.srcObject = stream;
-			el.play();
-		});
-
-		call.on('close', () => {
-			console.log('connection closed');
-		});
+	// Wait for stream on the call, then set peer video display
+	call.on('stream', stream => {
+		const el = $('#video').get(0);
+		el.srcObject = stream;
+		el.play();
 	});
+
+	call.on('close', () => {
+		console.log('connection closed');
+	});
+	//});
 }
 
 
