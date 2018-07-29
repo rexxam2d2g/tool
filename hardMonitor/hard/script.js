@@ -110,7 +110,7 @@ try {
 	var parameters = data.split('?');
 
 	// 各URLパラメータに対して処理実施
-	if (1 >= document.location.search.length) {
+	if (1 <= document.location.search.length) {
 		for (var i = 0; i < parameters.length; i++) {
 			// 各パラメータを格納
 			var element = parameters[i].split('=');
