@@ -68,7 +68,7 @@ else {
 	*/
 
 	//$('#watch').on('submit', e => {
-	e.preventDefault();
+	//e.preventDefault();
 	// Initiate a call!
 	//console.log($('#callto-id').val());
 	//const call = peer.call($('#callto-id').val());
