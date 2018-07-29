@@ -24,11 +24,11 @@ if (1 <= document.location.search.length) {
 // 適切なパラメータが無ければ停止
 if (p_apikey == null) {
 	alert("APIキーが指定されていません");
-	//window.open('about:blank', '_self').close();
+	window.open('about:blank', '_self').close();
 }
 else if (p_peerID == null) {
 	alert("PeerIDが指定されていません");
-	//window.open('about:blank', '_self').close();
+	window.open('about:blank', '_self').close();
 }
 else {
 	// Peer object
@@ -86,6 +86,7 @@ else {
 	peer.on('error', err => {
 		//alert(err.message);
 		alert("接続相手の電源が入っていないもしくはネット接続されていません");
+		window.open('about:blank', '_self').close();
 	});
 }
 
