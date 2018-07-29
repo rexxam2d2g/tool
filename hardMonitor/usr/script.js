@@ -70,8 +70,9 @@ else {
 	//$('#watch').on('submit', e => {
 	e.preventDefault();
 	// Initiate a call!
-	console.log($('#callto-id').val());
+	//console.log($('#callto-id').val());
 	//const call = peer.call($('#callto-id').val());
+	$('#your-id').text(peer.id);
 	const call = peer.call(p_peerID);
 
 	// Wait for stream on the call, then set peer video display
