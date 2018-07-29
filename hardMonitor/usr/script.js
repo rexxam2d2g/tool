@@ -61,7 +61,7 @@ else {
 		// Initiate a call!
 		//console.log($('#callto-id').val());
 		//const call = peer.call($('#callto-id').val());
-		$('#your-id').text(peer.id);
+		$('#your-id').text(p_peerID);
 		const call = peer.call(p_peerID);
 
 		// Wait for stream on the call, then set peer video display
@@ -84,7 +84,8 @@ else {
 	});
 
 	peer.on('error', err => {
-		alert(err.message);
+		//alert(err.message);
+		alert("接続相手の電源が入っていないもしくはネット接続されていません");
 	});
 }
 
