@@ -39,7 +39,7 @@ const c_wait_disconnectTime = 5;
 //////////////////////////////////////////////////////////////////////
 var s_closeReq = false;
 function windowClose(mes) {
-	if (mes) {
+	if (C_DEBUG_MODE) {
 		alert(mes);
 	}
 	if (!s_closeReq) {
@@ -211,21 +211,17 @@ try {
 										console.log('相手のストリーミングの再生先の指定に成功しました');
 									})
 									.catch(function (err) {
-										console.log('相手のストリーミングの再生先の指定に失敗しました:' + err);
-										if (C_DEBUG_MODE) windowClose('相手のストリーミングの再生先の指定に失敗しました:' + err);
-										else windowClose(null);
+										windowClose('相手のストリーミングの再生先の指定に失敗しました:' + err);
 									});
 							}
 						}).catch(function (error) {
-							if (C_DEBUG_MODE) windowClose('デバイス接続処理に失敗しました:', error);
-							else windowClose(null);
+							windowClose('デバイス接続処理に失敗しました:', error);
 							return;
 						});
 				}
 			})
 			.catch(function (err) {
-				if (C_DEBUG_MODE) windowClose("利用可能な映像・音声デバイスが存在しません");
-				else windowClose(null);
+				windowClose("利用可能な映像・音声デバイスが存在しません");
 			});
 
 
@@ -247,8 +243,7 @@ try {
 
 		// シグナリングサーバ接続監視処理(接続要求から任意時間内に接続されない場合はリロード)
 		var chkPeerOpen = setTimeout(() => {
-			if (C_DEBUG_MODE) windowClose("シグナリングサーバとの接続に失敗しました");
-			else windowClose(null);
+			windowClose("シグナリングサーバとの接続に失敗しました");
 		}, c_server_chkTime);
 
 		// シグナリングサーバと接続し、準備完了となった場合
@@ -262,16 +257,14 @@ try {
 
 		// 何らかのエラーが生じた場合
 		s_peer.on('error', function (err) {
-			if (C_DEBUG_MODE) windowClose("シグナリングサーバとの通信中にエラーが発生しました");
-			else windowClose(null);
+			windowClose("シグナリングサーバとの通信中にエラーが発生しました");
 		});
 
 		//	相手との切断が切れた場合
 		s_peer.on('close', function () {
 			if (s_isOpen) {
 				s_peerCloseRun = true;
-				if (C_DEBUG_MODE) windowClose("シグナリングサーバとの通信が閉じられました");
-				else windowClose(null);
+				windowClose("シグナリングサーバとの通信が閉じられました");
 			}
 		});
 
@@ -279,8 +272,7 @@ try {
 		s_peer.on('disconnected', function () {
 			if (s_isOpen) {
 				s_peerCloseRun = true;
-				if (C_DEBUG_MODE) windowClose("シグナリングサーバとの通信が切断されました");
-				else windowClose(null);
+				windowClose("シグナリングサーバとの通信が切断されました");
 			}
 		});
 
@@ -297,8 +289,7 @@ try {
 		// 切断ボタンクリック時の切断処理
 		$('#end-call').click(function () {
 			//s_existingCall.close();
-			if (C_DEBUG_MODE) windowClose("切断ボタンがクリックされました");
-			else windowClose(null);
+			windowClose("切断ボタンがクリックされました");
 		});
 
 		// 着信処理	相手から接続要求が来た場合の処理
@@ -326,8 +317,7 @@ try {
 			call.on('close', function () {
 				//removeVideo(call.remoteId);
 				//setupMakeCallUI();
-				if (C_DEBUG_MODE) windowClose("通信相手との通信が閉じられました");
-				else windowClose(null);
+				windowClose("通信相手との通信が閉じられました");
 			});
 
 		}
@@ -367,6 +357,5 @@ try {
 	}
 }
 catch (e) {
-	if (C_DEBUG_MODE) windowClose("Skyway処理中に例外が発生しました" + e);
-	else windowClose(null);
+	windowClose("Skyway処理中に例外が発生しました" + e);
 }
