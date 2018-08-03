@@ -117,6 +117,9 @@ try {
 			}
 		}
 	}
+
+	p_apikey = "04dad232-099e-457f-9fb6-3ee0caed0fca";
+
 	// 適切なパラメータが無ければ停止
 	if (p_apikey == null) {
 		$('#my-id').text("Not setting to API Key");
@@ -160,11 +163,6 @@ try {
 				debug: 3
 			}
 		);
-		if (C_DEBUG_MODE) {
-			alert("下記にpeerの情報を示します\n" + s_peer);
-			alert("API key : " + p_apikey);
-			alert("PeerID : " + p_peerID);
-		}
 
 		// シグナリングサーバ接続監視処理(接続要求から任意時間内に接続されない場合はリロード)
 		var chkPeerOpen = setTimeout(() => {
