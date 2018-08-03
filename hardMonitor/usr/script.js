@@ -41,26 +41,6 @@ else {
 
 	peer.on('open', () => {
 		$('#my-id').text(peer.id);
-
-		/*
-		// Click handlers setup
-		$('#broadcast').on('submit', e => {
-			e.preventDefault();
-			navigator.mediaDevices.getUserMedia({ audio: true, video: true }).then(stream => {
-				$('#video').get(0).srcObject = stream;
-				localStream = stream;
-			}).catch(err => {
-				$('#step1-error').show();
-				console.error(err);
-			});
-		});
-		*/
-
-		//$('#watch').on('submit', e => {
-		//e.preventDefault();
-		// Initiate a call!
-		//console.log($('#callto-id').val());
-		//const call = peer.call($('#callto-id').val());
 		$('#your-id').text(p_peerID);
 		const call = peer.call(p_peerID);
 
