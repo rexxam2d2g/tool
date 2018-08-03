@@ -4,13 +4,12 @@ let s_peer = null;
 let s_existingCall = null;
 let p_apikey = null;
 let p_peerID = null;
-let p_isDeviceTemp = null;
 
 
 //////////////////////////////////////////////////////////////////////
 // 定義部
 //////////////////////////////////////////////////////////////////////
-const C_DEBUG_MODE = false;
+const C_DEBUG_MODE = true;
 const C_AUDIO_ENABLE = false;
 const C_VIDEO_ENABLE = true;
 
@@ -55,8 +54,6 @@ function windowClose(mes) {
 			var tm = setInterval(() => {									// peer切断監視タイマ開始
 				if (s_peerCloseRun == true) {								// peerが切断？
 					console.log("正常終了しました");
-					//window.location.reload();								// ブラウザを更新
-					//windows.close();
 					window.open('about:blank', '_self').close();
 					clearInterval(tm);										// peer切断監視タイマ停止
 				}
@@ -64,8 +61,6 @@ function windowClose(mes) {
 					tmCnt++;
 					if (tmCnt >= c_wait_disconnectTime) {					// 任意周期分、切断待機した？
 						console.log("Peer切断が確認できませんが、強制的に修了します");
-						//window.location.reload();							// 強制的にブラウザを更新
-						//windows.close();
 						window.open('about:blank', '_self').close();
 						clearInterval(tm);									// peer切断監視タイマ停止
 					}
@@ -88,11 +83,11 @@ function windowClose(mes) {
 var s_peerCloseReq = false;
 var s_peerCloseRun = false;
 function peerClose() {
-	if (s_peer) {																// peer接続済み？
+	if (s_peer) {															// peer接続済み？
 		if (!s_peerCloseReq) {												// peer切断要求が初回？
 			s_peerCloseReq = true;											// peer切断要求を立てる
-			s_peer.disconnect();												// シグナリングサーバへの接続を閉じ、disconnectedイベントを送出
-			s_peer.destroy();													// 全てのコネクションを閉じ、シグナリングサーバへの接続を切断
+			s_peer.disconnect();											// シグナリングサーバへの接続を閉じ、disconnectedイベントを送出
+			s_peer.destroy();												// 全てのコネクションを閉じ、シグナリングサーバへの接続を切断
 		}
 	}
 }
@@ -120,9 +115,6 @@ try {
 			else if (element[0] === "peerID") {
 				p_peerID = element[1];
 			}
-			else if (element[0] === "isDeviceTemp") {
-				p_isDeviceTemp = element[1];
-			}
 		}
 	}
 	// 適切なパラメータが無ければ停止
@@ -135,90 +127,23 @@ try {
 		navigator.mediaDevices.enumerateDevices()
 			.then(function (devices) {
 
-				var constraints = null;
+				// デバイス接続パラメータの生成(デバイスの検出は自動で行う)
+				var constraints = {
+					video: C_VIDEO_ENABLE,
+					audio: C_AUDIO_ENABLE
+				}
 
-				// デバイス規定フラグが立っている？
-				if (p_isDeviceTemp) {
-					// 指定した映像・音声デバイスのIDを取得
-					var micID = null
-					var speakerID = null;
-					var videoID = null;
-					devices.forEach(function (device) {
-						if ((device.kind == c_AUDIO_MIC_KIND) && (device.label == c_AUDIO_MIC_LABEL)) {
-							micID = device.deviceId;
-						}
-						else if ((device.kind == c_AUDIO_SPEAKER_KIND) && (device.label == c_AUDIO_SPEAKER_LABEL)) {
-							speakerID = device.deviceId;
-						}
-						else if ((device.kind == c_VIDEO_KIND) && (device.label == c_VIDEO_LABEL)) {
-							videoID = device.deviceId;
-						}
-						//console.log(device);
+				// デバイス接続処理
+				navigator.mediaDevices.getUserMedia(constraints)
+					.then(function (stream) {
+						// 自身のストリーミングをローカルに設定
+						$('#my-video').get(0).srcObject = stream;
+						s_localStream = stream;
+					}).catch(function (error) {
+						windowClose('デバイス接続処理に失敗しました:', error);
+						return;
 					});
 
-					// 指定した映像・音声デバイスが存在するか確認
-					if (micID == null) {
-						windowClose("既定のマイクが見つかりません\n" + c_AUDIO_MIC_LABEL);
-					}
-					else if (speakerID == null) {
-						windowClose("既定のスピーカーが見つかりません\n" + c_AUDIO_SPEAKER_LABEL);
-					}
-					else if (videoID == null) {
-						windowClose("既定のカメラが見つかりません\n" + c_VIDEO_LABEL);
-					}
-					else {
-						// デバイス接続パラメータの生成(デバイスを直接指定)
-						constraints = {
-							"audio": {
-								"deviceId": micID
-							},
-							"video": {
-								"deviceId": videoID
-							}
-						};
-						if (C_DEBUG_MODE) {
-							alert("デバイス指定モードで起動します");
-						}
-					}
-				}
-				else {
-					// デバイス接続パラメータの生成(デバイスの検出は自動で行う)
-					constraints = {
-						video: C_VIDEO_ENABLE,
-						audio: C_AUDIO_ENABLE
-					}
-					if (C_DEBUG_MODE) {
-						alert("デバイスオート指定モードで起動します");
-					}
-				}
-
-				if (constraints == null) {
-					windowClose('デバイス情報がセットされませんでした');
-				}
-				else {
-					// デバイス接続処理
-					//navigator.mediaDevices.getUserMedia({video: true, audio: true})
-					navigator.mediaDevices.getUserMedia(constraints)
-						.then(function (stream) {
-							// 自身のストリーミングをローカルに設定
-							$('#my-video').get(0).srcObject = stream;
-							s_localStream = stream;
-
-							// 相手のストリーミングの再生先を指定
-							if (p_isDeviceTemp) {
-								$('#their-video').get(0).setSinkId(speakerID)
-									.then(function () {
-										console.log('相手のストリーミングの再生先の指定に成功しました');
-									})
-									.catch(function (err) {
-										windowClose('相手のストリーミングの再生先の指定に失敗しました:' + err);
-									});
-							}
-						}).catch(function (error) {
-							windowClose('デバイス接続処理に失敗しました:', error);
-							return;
-						});
-				}
 			})
 			.catch(function (err) {
 				windowClose("利用可能な映像・音声デバイスが存在しません");
@@ -276,22 +201,6 @@ try {
 			}
 		});
 
-		// 発信ボタンクリック時の発信処理
-		$('#make-call').submit(function (e) {
-			// 発信ボタンは使わない仕様の為、未処理
-			/*
-			e.preventDefault();
-			const call = s_peer.call($('#callto-id').val(), s_localStream);	// 相手のPeerID(別途入手)、自分のlocalStream
-			setupCallEventHandlers(call);
-			*/
-		});
-
-		// 切断ボタンクリック時の切断処理
-		$('#end-call').click(function () {
-			//s_existingCall.close();
-			windowClose("切断ボタンがクリックされました");
-		});
-
 		// 着信処理	相手から接続要求が来た場合の処理
 		s_peer.on('call', function (call) {
 			call.answer(s_localStream);
@@ -309,14 +218,12 @@ try {
 
 			call.on('stream', function (stream) {
 				addVideo(call, stream);
-				setupEndCallUI();
-				$('#their-id').text(call.remoteId);
+				$('#your-id').text(call.remoteId);
+
 				console.log("通信相手のストリームを取得しました");
 			});
 
 			call.on('close', function () {
-				//removeVideo(call.remoteId);
-				//setupMakeCallUI();
 				windowClose("通信相手との通信が閉じられました");
 			});
 
@@ -327,31 +234,8 @@ try {
 			$('#their-video').get(0).srcObject = stream;
 		}
 
-		// 切断された（した）相手のvideo要素を削除するための処理
-		function removeVideo(peerId) {
-			// PeerIDを元に削除
-			$('#' + peerId).remove();
-		}
-
-		// Callボタン表示
-		function setupMakeCallUI() {
-			$('#make-call').show();
-			$('#end-call').hide();
-		}
-
-		// Endボタン表示
-		function setupEndCallUI() {
-			$('#make-call').hide();
-
-			// "End Call"ボタンにより通信終了した場合、URLパラメータが消されて
-			// しまう為、操作不可とする。
-			// アプリ終了はブラウザ自体を閉じることで行う。
-			//$('#end-call').show();
-		}
-
-		// PeerIDをローカルストレージに書き込み
+		// PeerIDをローカルストレージに書き込み(別アプリにて本データを使用)
 		function setMyPeerID(peerID) {
-			//alert("set peerID : " + peerID);
 			localStorage.setItem('skyway-peerID', peerID);
 		}
 	}
