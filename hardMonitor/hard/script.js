@@ -212,12 +212,13 @@ try {
 			s_existingCall = call;
 			// 省略
 
+			/*
 			call.on('stream', function (stream) {
 				addVideo(call, stream);
 				$('#your-id').text(call.remoteId);
-
 				console.log("通信相手のストリームを取得しました");
 			});
+			*/
 
 			call.on('close', function () {
 				windowClose("通信相手との通信が閉じられました");
@@ -225,10 +226,12 @@ try {
 
 		}
 
+		/*
 		// VIDEOを再生するための処理
 		function addVideo(call, stream) {
 			$('#their-video').get(0).srcObject = stream;
 		}
+		*/
 
 		// PeerIDをローカルストレージに書き込み(別アプリにて本データを使用)
 		function setMyPeerID(peerID) {
