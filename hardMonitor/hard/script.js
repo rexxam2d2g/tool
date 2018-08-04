@@ -10,7 +10,7 @@ let p_peerID = null;
 // 定義部
 //////////////////////////////////////////////////////////////////////
 const C_DEBUG_MODE = false;
-const C_AUDIO_ENABLE = false;
+const C_AUDIO_ENABLE = true;
 const C_VIDEO_ENABLE = true;
 
 // シグナリングサーバ接続監視時間
