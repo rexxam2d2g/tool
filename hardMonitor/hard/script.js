@@ -9,19 +9,9 @@ let p_peerID = null;
 //////////////////////////////////////////////////////////////////////
 // 定義部
 //////////////////////////////////////////////////////////////////////
-const C_DEBUG_MODE = true;
+const C_DEBUG_MODE = false;
 const C_AUDIO_ENABLE = false;
 const C_VIDEO_ENABLE = true;
-
-// 映像・音声デバイスの規定値
-// ※オーディオはブラウザ画面のアドレスバー内のカメラアイコンから確認して任意のものを指定
-// ※ビデオは"console.log(device)"のコメントを外してブラウザの開発者ツールから確認して任意のものを指定
-const c_AUDIO_MIC_KIND = "audioinput";
-const c_AUDIO_MIC_LABEL = "AK5371, USB Audio-Default Audio Device";
-const c_AUDIO_SPEAKER_KIND = "audiooutput";
-const c_AUDIO_SPEAKER_LABEL = "C-Media USB Headphone Set, USB Audio-Hardware device with all software conversions";
-const c_VIDEO_KIND = "videoinput";
-const c_VIDEO_LABEL = "mmal service 16.1";
 
 // シグナリングサーバ接続監視時間
 const c_server_chkTime = 5 * 1000;
@@ -38,10 +28,15 @@ const c_wait_disconnectTime = 5;
 //////////////////////////////////////////////////////////////////////
 var s_closeReq = false;
 function windowClose(mes) {
+
 	if (C_DEBUG_MODE) {
 		alert(mes);
 	}
+
+	// 通信終了毎にブラウザを閉じなくても再接続可能になったので
+	// 以下処理は未実施
 	return;
+
 	if (!s_closeReq) {
 		s_closeReq = true;
 		if (s_peer == null) {												// peer未接続？
