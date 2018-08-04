@@ -118,8 +118,6 @@ try {
 		}
 	}
 
-	p_apikey = "04dad232-099e-457f-9fb6-3ee0caed0fca";
-
 	// 適切なパラメータが無ければ停止
 	if (p_apikey == null) {
 		$('#my-id').text("Not setting to API Key");
