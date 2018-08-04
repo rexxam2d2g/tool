@@ -41,6 +41,7 @@ function windowClose(mes) {
 	if (C_DEBUG_MODE) {
 		alert(mes);
 	}
+	return;
 	if (!s_closeReq) {
 		s_closeReq = true;
 		if (s_peer == null) {												// peer未接続？
