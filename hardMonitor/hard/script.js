@@ -138,7 +138,7 @@ try {
 				navigator.mediaDevices.getUserMedia(constraints)
 					.then(function (stream) {
 						// 自身のストリーミングをローカルに設定
-						$('#my-video').get(0).srcObject = stream;
+						$('#their-video').get(0).srcObject = stream;
 						s_localStream = stream;
 					}).catch(function (error) {
 						windowClose('デバイス接続処理に失敗しました:', error);
