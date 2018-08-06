@@ -24,7 +24,7 @@ if(p_apikey == null) {
 	alert("APIƒL[‚ªw’è‚³‚ê‚Ä‚¢‚Ü‚¹‚ñ");
 }
 else {
-	navigator.mediaDevices.getUserMedia({video: true, audio: true})
+	navigator.mediaDevices.getUserMedia({video: true, audio: false})
 	    .then(function (stream) {
 	        // Success
 	        $('#my-video').get(0).srcObject = stream;
