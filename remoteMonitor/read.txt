@@ -1,0 +1,5 @@
+【デバイス側】
+https://rexxam2d2g.github.io/tool/remoteMonitor/dev/index.html?apikey=XXXX?peerID=YYYY
+
+【ユーザー側】
+https://rexxam2d2g.github.io/tool/remoteMonitor/usr/index.html?apikey=XXXX?peerID=YYYY
