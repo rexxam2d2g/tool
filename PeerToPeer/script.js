@@ -4,16 +4,15 @@ let peer = null;
 let existingCall = null;
 let p_apikey = null;
 
-if (1 >= document.location.search.length) {
-	alert("必要なパラメータがURLに付属されていません");
-}
-else {
+
+if (1 <= document.location.search.length) {
 	// URLパラメータを取得
 	var data = document.location.search.substring(1);
 	var parameters = data.split('?');
 
 	// 各URLパラメータに対して処理実施
 	for (var i = 0; i < parameters.length; i++) {
+		var element = parameters[i].split('=');
 		if (element[0] === "apikey") {
 			p_apikey = element[1];
 		}
