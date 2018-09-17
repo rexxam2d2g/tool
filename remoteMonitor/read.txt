@@ -22,8 +22,9 @@
   デバイス側：https://rexxam2d2g.github.io/tool/remoteMonitor/dev/index.html?apikey=XXXX?peerID=YYYY
   ユーザー側：https://rexxam2d2g.github.io/tool/remoteMonitor/usr/index.html?apikey=XXXX?peerID=YYYY
               ※1  XXXX：【準備】で控えた「APIキー」
-              ※2  YYYY：任意のPeerID（デバイス側とユーザー側で同じIDでアクセスします）
+              ※2  YYYY：任意のPeerID
   
 【備考】
-  デバイス側は「Raspberry Pi」を使用することを想定して設計しています。
+  ・デバイス側は「Raspberry Pi」を使用することを想定して設計しています。
+  　「Raspberry Pi」に任意のUSBカメラを接続することで使用可能です。
   
