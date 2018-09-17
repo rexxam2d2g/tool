@@ -3,11 +3,9 @@
   カメラを有するデバイス側（ラズパイなど）から取得したカメラ映像を「Skyway」を経由して
   ユーザー側（スマホやPCなど）で見れるようになります。
 
-
 【準備】
   「Skyway」のアカウントが必要になるので、下記URLから取得します。
-    https://webrtc.ecl.ntt.com/signup.html
-    
+      https://webrtc.ecl.ntt.com/signup.html
   ログインした後、下記手順に従いアプリケーションを追加します。
     1) 「新しくアプリケーションを追加する」をクリック
     2) 「アプリケーション説明文」に任意の説明文を追加
@@ -16,18 +14,15 @@
     5) アプリケーションが作成されることを確認
     6) 「APIキー」を控えておきます
 
-
 【使用方法】
   デバイス側とユーザー側で下記URLにそれぞれアクセスするだけです。
   先にデバイス側でアクセスしてカメラ映像が映し出されたことを確認してから
   ユーザー側からアクセスして下さい。
-
+  
   デバイス側：https://rexxam2d2g.github.io/tool/remoteMonitor/dev/index.html?apikey=XXXX?peerID=YYYY
   ユーザー側：https://rexxam2d2g.github.io/tool/remoteMonitor/usr/index.html?apikey=XXXX?peerID=YYYY
-  
-  ※1  XXXX：【準備】で控えた「APIキー」
-  ※2  YYYY：任意のPeerID（デバイス側とユーザー側で同じIDでアクセスします）
-  
+              ※1  XXXX：【準備】で控えた「APIキー」
+              ※2  YYYY：任意のPeerID（デバイス側とユーザー側で同じIDでアクセスします）
   
 【備考】
   デバイス側は「Raspberry Pi」を使用することを想定して設計しています。
