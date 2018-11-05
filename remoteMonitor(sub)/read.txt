@@ -1,0 +1,39 @@
+【概要】
+  本ツールは、WebRTCプラットフォーム「Skyway」を使用した遠隔カメラモニターです。
+  カメラを有するデバイス側（ラズパイなど）から取得したカメラ映像を「Skyway」を経由して
+  ユーザー側（スマホやPCなど）で見れるようになります。
+
+【準備】
+  「Skyway」のアカウントが必要になるので、下記URLから取得します。
+      https://webrtc.ecl.ntt.com/signup.html
+  ログインした後、下記手順に従いアプリケーションを追加します。
+    1) 「新しくアプリケーションを追加する」をクリック
+    2) 「アプリケーション説明文」に任意の説明文を追加
+    3) 「利用ドメイン名」に"rexxam2d2g.github.io"を追加
+    4) その他はデフォルトのままで「アプリケーションを作成する」をクリック
+        ※「TURNを利用する」にチェックが入っていることを確認して下さい。
+        　本設定が無効になっているとNAT越えが正常に行えず、黒塗りの画面が表示されます。
+    5) アプリケーションが作成されることを確認
+    6) 「APIキー」を控えておきます
+
+【使用方法】
+  デバイス側とユーザー側で下記URLにそれぞれアクセスするだけです。
+  先にデバイス側でアクセスしてカメラ映像が映し出されたことを確認してから
+  ユーザー側からアクセスして下さい。
+  
+  デバイス側：https://rexxam2d2g.github.io/tool/remoteMonitor/dev/index.html?apikey=XXXX?peerID=YYYY
+  ユーザー側：https://rexxam2d2g.github.io/tool/remoteMonitor/usr/index.html?apikey=XXXX?peerID=YYYY
+              ※1  XXXX：上記で控えた「APIキー」
+              ※2  YYYY：任意のPeerID
+  
+【備考】
+  ・デバイス側は「Raspberry Pi」を使用することを想定して設計しています。
+  　「Raspberry Pi」に任意のUSBカメラを接続することで使用可能です。
+  ・利用を終了するにはブラウザを閉じて下さい。
+  ・動作環境によっては正常に動作しない場合があります。
+  ・カメラ映像が安定しない場合、一度ブラウザを閉じれてから再接続して下さい。
+
+【動作確認環境】
+  ・社内PC (Windows7 - Google Chrome)
+  ・Android (Android 7.0 - Google Chrome)
+  ・iPhone (iOS 12 - Google Chrome)
